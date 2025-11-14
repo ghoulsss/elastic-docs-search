@@ -1,0 +1,30 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: elastic
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    networks:
+      - esnet
+
+  fastapi:
+    build: .
+    container_name: fastapi
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch
+
+networks:
+  esnet:

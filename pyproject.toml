@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "elastic-docs"
+version = "0.1.0"
+description = ""
+authors = ["Danil <icegnom7@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.121.2"
+uvicorn = "^0.38.0"
+
+pydantic = "^2.12.4"
+pypdf2 = "^3.0.1"
+aiofiles = "^25.1.0"
+aioboto3 = "^15.5.0"
+python-multipart = "^0.0.20"
+elasticsearch = "8.11.0"
+python-dotenv = "^1.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+#[tool.poetry.group.dev.dependencies]
+#ruff = "^0.14.4"
+#mypy = "^1.18.2"
