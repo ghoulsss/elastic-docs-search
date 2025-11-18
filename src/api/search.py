@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from services.elastic import es, INDEX_NAME
 
@@ -59,3 +59,12 @@ async def search_documents(payload: SearchRequest):
         results.append(doc)
 
     return {"count": len(results), "results": results}
+
+@router.get("/documents/{doc_id}")
+async def get_all_documents(doc_id: str):
+    try:
+        resp = await es.get(index=INDEX_NAME, id=doc_id)
+    except Exception:
+        raise HTTPException(status_code=404, detail="Document not found")
+
+    return resp["_source"]
