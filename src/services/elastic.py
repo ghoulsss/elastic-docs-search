@@ -4,6 +4,7 @@ from config import ELASTIC_HOST, INDEX_NAME
 
 es = AsyncElasticsearch(hosts=[ELASTIC_HOST])
 
+
 async def create_index():
     exists = await es.indices.exists(index=INDEX_NAME)
     if not exists:
@@ -16,12 +17,31 @@ async def create_index():
                         "type": "nested",
                         "properties": {
                             "pageNum": {"type": "integer"},
-                            "pageSummary": {"type": "text"}
+                            "pageSummary": {
+                                "type": "text",
+                                "fields": {
+                                    "raw": {  # ← ТОЧНОЕ совпадение
+                                        "type": "keyword",
+                                        "normalizer": "lowercase_normalizer",
+                                    }
+                                },
+                            },
+                        },
+                    },
+                }
+            },
+            settings={
+                "analysis": {
+                    "normalizer": {
+                        "lowercase_normalizer": {
+                            "type": "custom",
+                            "filter": ["lowercase"],
                         }
                     }
                 }
-            }
+            },
         )
+
 
 async def index_document(document):
     """
@@ -32,5 +52,15 @@ async def index_document(document):
     """
     await es.index(index=INDEX_NAME, id=document["documentId"], document=document)
 
+
 async def close():
     await es.close()
+
+
+async def delete_index():
+    exists = await es.indices.exists(index=INDEX_NAME)
+    if not exists:
+        return {"status": "error", "message": "Index does not exist"}
+
+    await es.indices.delete(index=INDEX_NAME)
+    return {"status": "ok", "message": "Index deleted"}
