@@ -19,7 +19,7 @@ async def extract_pages(file_path: str):
     for num, page in enumerate(reader.pages, start=1):
         text = page.extract_text() or ""
 
-        if len(text.strip()) < 20:
+        if len(text.strip()) < 5:
             ocr_text = pytesseract.image_to_string(images[num - 1], lang="rus")
             if ocr_text.strip():
                 text = ocr_text
