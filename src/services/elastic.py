@@ -1,6 +1,6 @@
 from elasticsearch import AsyncElasticsearch
-from config import ELASTIC_HOST, INDEX_NAME
 
+from config import ELASTIC_HOST, INDEX_NAME
 
 es = AsyncElasticsearch(hosts=[ELASTIC_HOST])
 
