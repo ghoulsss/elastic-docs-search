@@ -11,7 +11,7 @@ import config
 from s3.downloader_pdf import download_pdf_from_message
 
 # print(f"amqp://{config.RABBITMQ_LOG}:{config.RABBITMQ_PASS}@localhost:5672/")
-UPLOAD_URL = "http://localhost:8000/api/upload"
+UPLOAD_URL = "http://localhost:8000/upload-pdf/upload"
 
 channel_settings = Channel(prefetch_count=1, global_qos=True, publisher_confirms=True)
 

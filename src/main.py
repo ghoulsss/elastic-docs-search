@@ -3,6 +3,7 @@ import asyncio
 from fastapi import FastAPI
 from api.upload import router as upload_router
 from api.search import router as search_router
+from api.index import router as index_router
 from s3.downloader_pdf import download_pdf_from_message
 from services.elastic import create_index
 from config import INDEX_NAME
@@ -10,8 +11,9 @@ from config import INDEX_NAME
 print(INDEX_NAME)
 app = FastAPI(title="PDF Search Service")
 
-app.include_router(upload_router, prefix="/api")
-app.include_router(search_router, prefix="/api")
+app.include_router(upload_router, prefix="/upload-pdf")
+app.include_router(search_router, prefix="/elaastic")
+app.include_router(index_router, prefix="/index")
 
 
 # создаём индекс при старте
