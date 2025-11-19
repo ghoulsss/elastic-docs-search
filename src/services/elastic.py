@@ -17,27 +17,9 @@ async def create_index():
                         "type": "nested",
                         "properties": {
                             "pageNum": {"type": "integer"},
-                            "pageSummary": {
-                                "type": "text",
-                                "fields": {
-                                    "raw": {  # ← ТОЧНОЕ совпадение
-                                        "type": "keyword",
-                                        "normalizer": "lowercase_normalizer",
-                                    }
-                                },
-                            },
+                            "pageSummary": {"type": "text"},
                         },
                     },
-                }
-            },
-            settings={
-                "analysis": {
-                    "normalizer": {
-                        "lowercase_normalizer": {
-                            "type": "custom",
-                            "filter": ["lowercase"],
-                        }
-                    }
                 }
             },
         )

@@ -5,6 +5,7 @@ from services.elastic import index_document
 
 router = APIRouter()
 
+
 @router.post("/upload")
 async def upload_pdf(file: UploadFile, documentId: str = Form(...)):
     # сохраняем временно PDF
@@ -14,10 +15,7 @@ async def upload_pdf(file: UploadFile, documentId: str = Form(...)):
         await f.write(content)
 
     pages = await extract_pages(file_path)
-    document = {
-        "documentId": documentId,
-        "pages": pages
-    }
+    document = {"documentId": documentId, "pages": pages}
 
     await index_document(document)
     return {"status": "ok", "documentId": documentId, "pages": len(pages)}
