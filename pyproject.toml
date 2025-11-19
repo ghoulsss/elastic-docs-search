@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "elastic-docs"
+name = "src"
 version = "0.1.0"
 description = ""
 authors = ["Danil <icegnom7@gmail.com>"]
@@ -20,6 +20,9 @@ python-dotenv = "^1.2.1"
 pytesseract = "^0.3.13"
 pdf2image = "^1.17.0"
 pillow = "^12.0.0"
+faststream = {extras = ["rabbit"], version = "^0.6.3"}
+minio = "^7.2.18"
+black = "^25.11.0"
 
 [build-system]
 requires = ["poetry-core"]
